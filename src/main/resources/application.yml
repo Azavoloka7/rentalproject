@@ -1,32 +1,44 @@
 # Spring application settings
-spring:
-  application:
-    name: rental-project
+app:
+  name: rental-project
 
 # Server settings
 server:
   port: 8080
 
 # Logging settings
-logging:
+log:
   level:
     org:
-      springframework: DEBUG
+      springframework: INFO  # Set to INFO for production
 
 # Data Source settings
-datasource:
-  url: jdbc:h2:mem:testdb
-  driver-class-name: org.h2.Driver
-  username: sa
-  password:
+db:
+  datasource:
+    url: jdbc:mysql://localhost:3308/rental_db  # Replace with your production database URL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Z@v010ka  # Use a secure password
   h2:
     console:
-      enabled: true
+      enabled: false  # Disable H2 console in production
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: validate  # Use "validate" for production, or "none" to disable automatic schema updates
+    show-sql: false  # Set to false in production
 
 # Thymeleaf settings
-thymeleaf:
-  cache: false
+view:
+  thymeleaf:
+    cache: true  # Enable template caching for better performance
+
+# Spring Security settings (customize as per your requirements)
+spring:
+  security:
+    basic:
+      enabled: false  # Disable basic authentication if not needed
+    # Add more security configurations as required
+
+# Externalize sensitive information using environment variables
+# Example: DB_PASSWORD should be set as an environment variable
+

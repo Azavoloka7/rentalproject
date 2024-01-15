@@ -17,8 +17,7 @@ public class DatabaseConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error loading MySQL JDBC driver");
+            throw new RuntimeException("Error loading MySQL JDBC driver", e);
         }
     }
 
@@ -32,8 +31,7 @@ public class DatabaseConnection {
             try {
                 connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Error connecting to the database");
+                throw new RuntimeException("Error connecting to the database", e);
             }
         }
         return connection;
@@ -45,8 +43,7 @@ public class DatabaseConnection {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Error closing the database connection");
+                throw new RuntimeException("Error closing the database connection", e);
             } finally {
                 connection = null; // Reset connection to null after closing
             }

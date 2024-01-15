@@ -3,54 +3,39 @@ package com.zavoloka.rental.controller;
 import com.zavoloka.rental.model.Property;
 import com.zavoloka.rental.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+import java.util.Optional;
+
+@RestController
 @RequestMapping("/properties")
 public class PropertyController {
 
+    private final PropertyService propertyService;
+
     @Autowired
-    private PropertyService propertyService;
+    public PropertyController(PropertyService propertyService) {
+        this.propertyService = propertyService;
+    }
 
     @GetMapping
-    public String listProperties(Model model) {
-        model.addAttribute("properties", propertyService.getAllProperties());
-        return "property/list";
+    public List<Property> getAllProperties() {
+        return propertyService.getAllProperties();
     }
 
     @GetMapping("/{id}")
-    public String viewProperty(@PathVariable Long id, Model model) {
-        Property property = propertyService.getPropertyById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid property id: " + id));
-        model.addAttribute("property", property);
-        return "property/view";
+    public Optional<Property> getPropertyById(@PathVariable Long id) {
+        return propertyService.getPropertyById(id);
     }
 
-    @GetMapping("/new")
-    public String showPropertyForm(Model model) {
-        model.addAttribute("property", new Property());
-        return "property/form";
-    }
-
-    @PostMapping("/new")
-    public String saveProperty(@ModelAttribute Property property) {
+    @PostMapping
+    public void saveProperty(@RequestBody Property property) {
         propertyService.saveProperty(property);
-        return "redirect:/properties";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editPropertyForm(@PathVariable Long id, Model model) {
-        Property property = propertyService.getPropertyById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid property id: " + id));
-        model.addAttribute("property", property);
-        return "property/form";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteProperty(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteProperty(@PathVariable Long id) {
         propertyService.deleteProperty(id);
-        return "redirect:/properties";
     }
 }

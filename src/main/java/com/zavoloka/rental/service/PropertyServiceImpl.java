@@ -11,8 +11,12 @@ import java.util.Optional;
 @Service
 public class PropertyServiceImpl implements PropertyService {
 
+    private final PropertyRepository propertyRepository;
+
     @Autowired
-    private PropertyRepository propertyRepository;
+    public PropertyServiceImpl(PropertyRepository propertyRepository) {
+        this.propertyRepository = propertyRepository;
+    }
 
     @Override
     public List<Property> getAllProperties() {
@@ -32,5 +36,15 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public void deleteProperty(Long id) {
         propertyRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Property> getAvailablePropertiesForRent() {
+        return propertyRepository.findByAvailableForRentTrue();
+    }
+
+    @Override
+    public List<Property> getPropertiesByLocation(String location) {
+        return propertyRepository.findByLocation(location);
     }
 }
