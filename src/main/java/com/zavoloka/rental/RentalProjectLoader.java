@@ -39,7 +39,7 @@ public class RentalProjectLoader {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception according to your project's needs
+            e.printStackTrace(); // Handle the exception
         }
 
         return properties;
@@ -65,7 +65,7 @@ public class RentalProjectLoader {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception according to your project's needs
+            e.printStackTrace(); // Handle the exception
         }
 
         return clients;
