@@ -22,7 +22,7 @@ public class JpaConfig {
     @Bean
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3308/rental_db");
+        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3308/rentalproject");
         hikariConfig.setUsername("root");
         hikariConfig.setPassword("Z@v010ka");
         // ... other configuration options

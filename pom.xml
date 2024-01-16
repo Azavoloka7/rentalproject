@@ -29,7 +29,7 @@
 		<h2.version>2.2.224</h2.version>
 		<mysql.connector.version>8.0.33</mysql.connector.version>
 		<javax.persistence.version>2.2</javax.persistence.version>
-		<org.openjfx.version>21-ea+21</org.openjfx.version>
+		<org.openjfx.version>21.0.1</org.openjfx.version>
 	</properties>
 
 	<dependencies>
@@ -100,11 +100,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-graphics</artifactId>
-			<version>21-ea+24</version>
 		</dependency>
 	</dependencies>
 

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class DatabaseConnection {
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3308/rental_db";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3308/rentalproject";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "Z@v010ka";
 

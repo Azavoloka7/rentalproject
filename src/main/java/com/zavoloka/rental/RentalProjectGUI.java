@@ -49,7 +49,7 @@ public class RentalProjectGUI extends Application {
     private void submitRequest(String clientName, String rentalDuration, String rentalType) {
         // Validate input (you can add more validation as needed)
         if (clientName.isEmpty() || rentalDuration.isEmpty() || rentalType.isEmpty()) {
-            showError("Please fill in all fields.");
+            showError();
             return;
         }
 
@@ -59,11 +59,11 @@ public class RentalProjectGUI extends Application {
         showInfo("Success", message);
     }
 
-    private void showError(String message) {
+    private void showError() {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText("Please fill in all fields.");
         alert.showAndWait();
     }
 
