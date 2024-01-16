@@ -47,13 +47,13 @@ public class RentalProjectGUI extends Application {
     }
 
     private void submitRequest(String clientName, String rentalDuration, String rentalType) {
-        // Validate input (you can add more validation as needed)
+        // Validate input 
         if (clientName.isEmpty() || rentalDuration.isEmpty() || rentalType.isEmpty()) {
             showError();
             return;
         }
 
-        // Process rental request (you can add your own logic here)
+        // Process rental request 
         // For now, just display a message
         String message = String.format("Rental request submitted for %s.%nDuration: %s days%nRental Type: %s", clientName, rentalDuration, rentalType);
         showInfo("Success", message);
