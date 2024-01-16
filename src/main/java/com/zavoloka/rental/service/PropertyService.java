@@ -9,7 +9,7 @@ public interface PropertyService {
     List<Property> getAllProperties();
     Optional<Property> getPropertyById(Long id);
     void saveProperty(Property property);
-    void deleteProperty(Long id);
+    boolean deleteProperty(Long id);
 
     List<Property> getAvailablePropertiesForRent();
 

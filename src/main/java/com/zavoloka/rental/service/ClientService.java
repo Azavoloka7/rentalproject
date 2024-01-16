@@ -31,7 +31,7 @@ public class ClientService {
         clientRepository.save(client);
     }
 
-    public void updateClient(int clientId, Client updatedClient) {
+    public boolean updateClient(int clientId, Client updatedClient) {
         Optional<Client> optionalExistingClient = clientRepository.findById((long) clientId);
         optionalExistingClient.ifPresent(existingClient -> {
             // Update client properties
@@ -42,9 +42,11 @@ public class ClientService {
             // Save the updated client
             clientRepository.save(existingClient);
         });
+        return false;
     }
 
-    public void deleteClient(int clientId) {
+    public boolean deleteClient(int clientId) {
         clientRepository.deleteById((long) clientId);
+        return false;
     }
 }

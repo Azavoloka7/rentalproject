@@ -1,0 +1,31 @@
+<configuration>
+
+    <!-- Define the default log level -->
+    <root level="info">
+        <appender-ref ref="Console" />
+    </root>
+
+    <!-- Console Appender Configuration -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Define the log format -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender Configuration -->
+    <appender name="File" class="ch.qos.logback.core.FileAppender">
+        <!-- Specify the absolute or relative path for the log file -->
+        <file>/path/to/logs/application.log</file>
+        <encoder>
+            <!-- Define the log format -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger Configuration -->
+    <logger name="com.example" level="debug" additivity="false">
+        <appender-ref ref="File" />
+    </logger>
+
+</configuration>

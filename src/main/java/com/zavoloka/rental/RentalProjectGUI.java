@@ -1,12 +1,11 @@
 package com.zavoloka.rental;
 
+import ch.qos.logback.core.joran.event.BodyEvent;
+import com.mysql.cj.BindValue;
+import com.zavoloka.rental.model.Property;
+import com.zavoloka.rental.model.RentalTransaction;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class RentalProjectGUI extends Application {
@@ -19,59 +18,56 @@ public class RentalProjectGUI extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Rental Project");
 
-        // Create labels and text fields for client information
-        Label nameLabel = new Label("Client Name:");
+        // ... (Existing code)
+
+        // Create TextFields for Name and Duration
         TextField nameField = new TextField();
-
-        Label durationLabel = new Label("Rental Duration (days):");
         TextField durationField = new TextField();
-
-        Label rentalTypeLabel = new Label("Rental Type:");
-        TextField rentalTypeField = new TextField();
+        TextField rentalTypeField = new TextField();  // Assuming this is the correct control
 
         // Create a button to submit the rental request
         Button submitButton = new Button("Submit Request");
-        submitButton.setOnAction(e -> submitRequest(nameField.getText(), durationField.getText(), rentalTypeField.getText()));
+        BindValue propertyComboBox=null;
+        submitButton.setOnAction(e -> submitRequest(nameField.getText(), durationField.getText(),
+                rentalTypeField.getText(), (Property) propertyComboBox.getValue()));
 
-        // Layout setup using VBox
-        VBox layout = new VBox(10);
-        layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.getChildren().addAll(nameLabel, nameField, durationLabel, durationField, rentalTypeLabel, rentalTypeField, submitButton);
-
-        // Set up the scene
-        Scene scene = new Scene(layout, 300, 200);
-        primaryStage.setScene(scene);
-
-        // Show the stage
-        primaryStage.show();
+        // ... (Existing code)
     }
-
-    private void submitRequest(String clientName, String rentalDuration, String rentalType) {
-        // Validate input 
+    private void submitRequest(String clientName, String rentalDuration, String rentalType, Property selectedProperty) {
+        // Validate input
         if (clientName.isEmpty() || rentalDuration.isEmpty() || rentalType.isEmpty()) {
-            showError();
+            showError("Please fill in all fields.");
             return;
         }
 
-        // Process rental request 
+        // Process rental request
+        // Create a RentalRequest object using the input data
+        RentalTransaction rentalTransaction = new RentalTransaction(clientName, rentalDuration, rentalType, selectedProperty);
+
         // For now, just display a message
-        String message = String.format("Rental request submitted for %s.%nDuration: %s days%nRental Type: %s", clientName, rentalDuration, rentalType);
+        String message = "Rental request submitted:\n" + rentalTransaction.toString();
         showInfo("Success", message);
     }
 
-    private void showError() {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+    private void showError(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
-        alert.setContentText("Please fill in all fields.");
+        alert.setContentText(errorMessage);
         alert.showAndWait();
     }
 
     private void showInfo(String title, String message) {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    private void loadProperties(ComboBox<Property> propertyComboBox) {
+        // ... (Existing code)
+    }
+
+    // ... (Existing code)
 }

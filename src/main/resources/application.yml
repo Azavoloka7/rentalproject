@@ -15,7 +15,7 @@ log:
 # Data Source settings
 db:
   datasource:
-    url: jdbc:mysql://localhost:3308/rental_db  # Replace with your production database URL
+    url: jdbc:mysql://localhost:3308/rentalproject  # Replace with your production database URL
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: Z@v010ka  # Use a secure password

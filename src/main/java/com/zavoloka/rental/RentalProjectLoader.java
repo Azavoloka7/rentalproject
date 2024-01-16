@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RentalProjectLoader {
+
     private static final String JDBC_URL = "jdbc:mysql://localhost:3308/rentalproject";
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "Z@v010ka";
@@ -26,20 +27,21 @@ public class RentalProjectLoader {
                  ResultSet resultSet = statement.executeQuery()) {
 
                 while (resultSet.next()) {
-                    long id = resultSet.getLong("id");
+                    long propertyId = resultSet.getLong("Id");
                     String name = resultSet.getString("name");
                     String location = resultSet.getString("location");
                     int bedrooms = resultSet.getInt("bedrooms");
-                    boolean availableForRent = resultSet.getBoolean("availableForRent");
+                    boolean isAvailable = resultSet.getBoolean("isAvailable");
                     int rentPrice = resultSet.getInt("rentPrice");
-                    double rentAmount = resultSet.getDouble("rentAmount");
+                    BigDecimal dailyRate = resultSet.getBigDecimal("dailyRate");
+                    BigDecimal rentAmount = resultSet.getBigDecimal("rentAmount");
 
-                    Property property = new Property(id, name, location, bedrooms, availableForRent, rentPrice, rentAmount);
+                    Property property = new Property(propertyId, name, location, bedrooms, isAvailable, rentPrice, dailyRate, rentAmount);
                     properties.add(property);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception
+            handleSQLException(e);
         }
 
         return properties;
@@ -65,7 +67,7 @@ public class RentalProjectLoader {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception
+            handleSQLException(e);
         }
 
         return clients;
@@ -75,8 +77,27 @@ public class RentalProjectLoader {
         List<Property> properties = loadProperties();
         List<Client> clients = loadClients();
 
-        System.out.println(properties);
-        System.out.println(clients);
-        // Use the loaded properties and clients in your project as needed
+        if (!clients.isEmpty()) {
+            Client seventhClient = clients.get(6);
+
+            // Set the daily rate and number of days
+            BigDecimal dailyRate = BigDecimal.valueOf(10000);
+            int numberOfDays = 5; // Adjust the number of days as needed
+
+            // Calculate the total rental cost
+            BigDecimal rentalCost = seventhClient.calculateRentalCost(numberOfDays, dailyRate);
+
+            // Rent the item using the calculated cost
+            seventhClient.rentItem(rentalCost);
+
+            System.out.println(seventhClient);
+        } else {
+            System.out.println("No clients loaded.");
+        }
+    }
+
+    private static void handleSQLException(SQLException e) {
+        // Handle the exception based on your application's requirements
+        e.printStackTrace();
     }
 }

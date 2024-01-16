@@ -28,31 +28,32 @@ public class RentalTransaction {
     private Long propertyId;
     private double amount;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RentalTransaction that = (RentalTransaction) o;
-        return Double.compare(that.amount, amount) == 0 &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(transactionTime, that.transactionTime) &&
-                Objects.equals(clientId, that.clientId) &&
-                Objects.equals(propertyId, that.propertyId);
+    // Constructors, getters, setters, equals, hashCode, and toString methods...
+
+    public RentalTransaction(String clientName, String rentalDuration, String rentalType, Property selectedProperty) {
+        this.transactionTime = LocalDateTime.now();
+        this.clientId = getClientIdFromName(clientName);
+        this.propertyId = getPropertyIdFromType(rentalType);
+        this.amount = calculateAmount(rentalDuration, selectedProperty);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, transactionTime, clientId, propertyId, amount);
+    // Placeholder methods, replace with actual logic in your application
+
+    private Long getClientIdFromName(String clientName) {
+        // Implement logic to retrieve the client ID based on the client name
+        // For example, you might query a database to get the client ID.
+        return 1L;  // Replace with the actual client ID or retrieval logic.
     }
 
-    @Override
-    public String toString() {
-        return "RentalTransaction{" +
-                "id=" + id +
-                ", transactionTime=" + transactionTime +
-                ", clientId=" + clientId +
-                ", propertyId=" + propertyId +
-                ", amount=" + amount +
-                '}';
+    private Long getPropertyIdFromType(String rentalType) {
+        // Implement logic to retrieve the property ID based on the rental type
+        // For example, you might query a database to get the property ID.
+        return 1L;  // Replace with the actual property ID or retrieval logic.
+    }
+
+    private double calculateAmount(String rentalDuration, Property selectedProperty) {
+        // Implement logic to calculate the rental amount based on duration and property
+        // For example, you might consider the property type and duration in your calculation.
+        return 100.0;  // Replace with the actual amount calculation logic.
     }
 }

@@ -32,14 +32,14 @@ public class JpaRepositoriesConfiguration {
 
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager((jakarta.persistence.EntityManagerFactory) entityManagerFactory);
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
         return transactionManager;
     }
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        // Configure Hibernate properties here
-        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        // Configure JPA properties here
+        properties.put("javax.persistence.jdbc.driver", "org.hibernate.dialect.MySQLDialect");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.format_sql", "true");
         // ... add more properties as needed

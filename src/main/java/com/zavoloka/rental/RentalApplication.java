@@ -26,10 +26,13 @@ public class RentalApplication {
 			// Creating a Client instance
 			Client client1 = new Client(1L, "John Doe", "john@example.com", "1234567890", new BigDecimal("1000.00"));
 
-			// Creating a Property instance
-			Property property1 = new Property(1L, "Apartment A", "City Center", 3, true, 10000,10000);
+			// Creating a Property instance with the propertyId parameter
+			Property property1 = new Property(1L, "Apartment A", "City Center", 3, true, 3, new BigDecimal("10000.00"), new BigDecimal("10000.00"));
+
+			// Renting the property to the client
 			rentalService.rentProperty(client1, property1);
 
+			// Displaying client and property details
 			System.out.println(client1);
 			System.out.println(property1);
 		};
