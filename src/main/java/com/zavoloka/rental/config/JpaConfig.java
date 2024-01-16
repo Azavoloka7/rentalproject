@@ -1,11 +1,15 @@
 package com.zavoloka.rental.config;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -15,41 +19,42 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.zavoloka.rental.repository")
 public class JpaConfig {
 
-    // If you are using a DataSource, make sure to configure it and inject it here.
-    // @Autowired
-    // private DataSource dataSource;
-
-    // Additional JPA configuration can be done here
+    @Bean
+    public DataSource dataSource() {
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3308/rental_db");
+        hikariConfig.setUsername("root");
+        hikariConfig.setPassword("Z@v010ka");
+        // ... other configuration options
+        return new HikariDataSource(hikariConfig);
+    }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("dataSource") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
         em.setPackagesToScan("com.zavoloka.rental.model");
 
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
+        // Using Hibernate JPA Vendor Adapter for MySQL
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
-        // Additional JPA properties can be set here
+        // Additional Hibernate properties
         em.setJpaProperties(hibernateProperties());
 
         return em;
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory((jakarta.persistence.EntityManagerFactory) entityManagerFactory);
-        return transactionManager;
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager((jakarta.persistence.EntityManagerFactory) entityManagerFactory);
     }
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        // Configure Hibernate properties here
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.format_sql", "true");
-        // ... add more properties as needed
+        // ... other properties
 
         return properties;
     }

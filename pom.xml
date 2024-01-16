@@ -19,6 +19,8 @@
 	<description>Demo rental project for Spring Boot</description>
 
 	<properties>
+		<maven.compiler.source>16</maven.compiler.source>
+		<maven.compiler.target>16</maven.compiler.target>
 		<java.version>21</java.version>
 		<spring.boot.version>3.2.1</spring.boot.version>
 		<spring.boot.test.version>3.2.1</spring.boot.test.version>
@@ -30,6 +32,16 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>21-ea+24</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>21-ea+24</version>
+		</dependency>
 		<!-- Spring Boot Starters -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -114,10 +126,6 @@
 			<id>github</id>
 			<url>https://maven.pkg.github.com/Azavoloka7/rentalproject</url>
 		</repository>
-		<snapshotRepository>
-			<id>github-snapshots</id>
-			<url>https://maven.pkg.github.com/Azavoloka7/rentalproject/snapshots</url>
-		</snapshotRepository>
 	</distributionManagement>
 
 </project>

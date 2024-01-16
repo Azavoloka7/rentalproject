@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -46,5 +47,27 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public List<Property> getPropertiesByLocation(String location) {
         return propertyRepository.findByLocation(location);
+    }
+
+    // Optional: Add equals, hashCode, and toString methods
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PropertyServiceImpl that = (PropertyServiceImpl) o;
+        return Objects.equals(propertyRepository, that.propertyRepository);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(propertyRepository);
+    }
+
+    @Override
+    public String toString() {
+        return "PropertyServiceImpl{" +
+                "propertyRepository=" + propertyRepository +
+                '}';
     }
 }

@@ -3,6 +3,7 @@ package com.zavoloka.rental;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class DatabaseConnection {
 
@@ -12,7 +13,6 @@ public class DatabaseConnection {
 
     private static Connection connection;
 
-    // Static block to load the JDBC driver when the class is loaded
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -21,11 +21,9 @@ public class DatabaseConnection {
         }
     }
 
-    // Private constructor to prevent instantiation
     private DatabaseConnection() {
     }
 
-    // Method to get a connection to the database
     public static Connection getConnection() {
         if (connection == null) {
             try {
@@ -37,7 +35,6 @@ public class DatabaseConnection {
         return connection;
     }
 
-    // Method to close the database connection
     public static void closeConnection() {
         if (connection != null) {
             try {
@@ -45,8 +42,24 @@ public class DatabaseConnection {
             } catch (SQLException e) {
                 throw new RuntimeException("Error closing the database connection", e);
             } finally {
-                connection = null; // Reset connection to null after closing
+                connection = null;
             }
         }
+    }
+
+    // Adding equals, hashCode, and toString methods
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(connection);
+    }
+
+    @Override
+    public String toString() {
+        return "DatabaseConnection{" +
+                "connection=" + connection +
+                '}';
     }
 }

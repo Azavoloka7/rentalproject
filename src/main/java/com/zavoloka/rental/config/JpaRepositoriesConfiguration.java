@@ -15,12 +15,6 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.zavoloka.rental.repository")
 public class JpaRepositoriesConfiguration {
 
-    // If you are using a DataSource, make sure to configure it and inject it here.
-    // @Autowired
-    // private DataSource dataSource;
-
-    // Additional JPA configuration can be done here
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -38,8 +32,7 @@ public class JpaRepositoriesConfiguration {
 
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory((jakarta.persistence.EntityManagerFactory) entityManagerFactory);
+        JpaTransactionManager transactionManager = new JpaTransactionManager((jakarta.persistence.EntityManagerFactory) entityManagerFactory);
         return transactionManager;
     }
 
