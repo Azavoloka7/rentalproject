@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/usr/share/nginx/html
+    networks:
+      - my_network
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: Z@v010ka
+      MYSQL_DATABASE: rental_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Z@v010ka
+    volumes:
+      - ./db_data:/var/lib/mysql
+    networks:
+      - my_network
+
+networks:
+  my_network:

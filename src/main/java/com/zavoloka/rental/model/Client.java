@@ -1,10 +1,12 @@
 package com.zavoloka.rental.model;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Entity;
 import java.util.Objects;
-
+@Entity
 @Setter
 @Getter
 public class Client {
